@@ -22,7 +22,14 @@ public class CrawlerWorker {
 
 //    public final static String MOVIE_URL = "http://www.mxroom.com/thread-132542-1-1.html";
 //    public final static String MOVIE_URL = "http://www.mxroom.com/thread-131994-1-1.html";
-    public final static String MOVIE_URL = "http://www.mxroom.com/thread-132691-1-1.html";
+    public final static String MOVIE_URL = "http://www.mxroom.com/thread-133062-1-1.html";
+
+    public static void main(String[] args) {
+        CrawlerWorker crawler = new CrawlerWorker();
+
+        Movie movie = crawler.parseMovie(crawler.getResponseContent(MOVIE_URL));
+        System.out.println(movie);
+    }
 
     public String getResponseContent(String url) {
 
@@ -101,6 +108,14 @@ public class CrawlerWorker {
                 ed2kLinks.put("thunder://" + matcher.group(1), movie.getTitle());
             }
         }
+        movie.setEd2kDownLink(ed2kLinks);
+        if (movie.getEd2kDownLink().size() <= 0) {
+            matcher = Pattern.compile("magnet:(.+?)</div><br />", Pattern.DOTALL).matcher(content);
+            if (matcher.find()) {
+                ed2kLinks.put("magnet:" + matcher.group(1), movie.getTitle());
+            }
+        }
+        movie.setEd2kDownLink(ed2kLinks);
 
         //解析百度云下载
         pattern = Pattern.compile("<a href=\"http://pan.baidu.com(.+?)\" target=\"_blank\">", Pattern.DOTALL);
@@ -272,7 +287,7 @@ public class CrawlerWorker {
         }
 
         //解析简介
-        matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)</td></tr></table></td></tr></table>", Pattern.DOTALL).matcher(content);
+        matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)<a id=\"ed2k", Pattern.DOTALL).matcher(content);
         if (matcher.find()) {
             String tmp = matcher.group(1).replaceAll("<br />", "\n");
             Pattern p = Pattern.compile("<([^>]*)>");
@@ -283,6 +298,48 @@ public class CrawlerWorker {
             }
             m.appendTail(sb);
             movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
+        }
+        if (movie.getSummary() == null) {
+            matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)复制链接到迅雷下载", Pattern.DOTALL).matcher(content);
+            if (matcher.find()) {
+                String tmp = matcher.group(1).replaceAll("<br />", "\n");
+                Pattern p = Pattern.compile("<([^>]*)>");
+                Matcher m = p.matcher(tmp);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    m.appendReplacement(sb, "");
+                }
+                m.appendTail(sb);
+                movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
+            }
+        }
+        if (movie.getSummary() == null) {
+            matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)thunder:", Pattern.DOTALL).matcher(content);
+            if (matcher.find()) {
+                String tmp = matcher.group(1).replaceAll("<br />", "\n");
+                Pattern p = Pattern.compile("<([^>]*)>");
+                Matcher m = p.matcher(tmp);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    m.appendReplacement(sb, "");
+                }
+                m.appendTail(sb);
+                movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
+            }
+        }
+        if (movie.getSummary() == null) {
+            matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)magnet:", Pattern.DOTALL).matcher(content);
+            if (matcher.find()) {
+                String tmp = matcher.group(1).replaceAll("<br />", "\n");
+                Pattern p = Pattern.compile("<([^>]*)>");
+                Matcher m = p.matcher(tmp);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    m.appendReplacement(sb, "");
+                }
+                m.appendTail(sb);
+                movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
+            }
         }
 
         return movie;
