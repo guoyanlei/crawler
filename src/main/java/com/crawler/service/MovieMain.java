@@ -27,7 +27,7 @@ public class MovieMain {
 
         QiniuUtil qiniuUtil = QiniuUtil.getInstance();
 
-        for (int i = 1; i <= LENGTH; i++) {
+        for (int i = 6; i <= LENGTH; i++) {
             System.out.println("page -----------: " + i);
             Map<Integer, String> maps = crawler.parseMovieList(crawler.getResponseContent(MOVIE_LIST_PREFIX + i + MOVIE_LIST_END));
 
@@ -51,7 +51,6 @@ public class MovieMain {
                     movie.setScreenshot(newScrenshot);
                     movieDao.insert(movie);
                 }
-                Thread.sleep(500);
             }
         }
 

@@ -341,6 +341,34 @@ public class CrawlerWorker {
                 movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
             }
         }
+        if (movie.getSummary() == null) {
+            matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)下载链接", Pattern.DOTALL).matcher(content);
+            if (matcher.find()) {
+                String tmp = matcher.group(1).replaceAll("<br />", "\n");
+                Pattern p = Pattern.compile("<([^>]*)>");
+                Matcher m = p.matcher(tmp);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    m.appendReplacement(sb, "");
+                }
+                m.appendTail(sb);
+                movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
+            }
+        }
+        if (movie.getSummary() == null) {
+            matcher = Pattern.compile("<table cellspacing=\"0\" class=\"t_table\" >(.+?)网盘链接", Pattern.DOTALL).matcher(content);
+            if (matcher.find()) {
+                String tmp = matcher.group(1).replaceAll("<br />", "\n");
+                Pattern p = Pattern.compile("<([^>]*)>");
+                Matcher m = p.matcher(tmp);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    m.appendReplacement(sb, "");
+                }
+                m.appendTail(sb);
+                movie.setSummary(sb.toString().replaceAll("&nbsp;", " ").trim());
+            }
+        }
 
         return movie;
 
