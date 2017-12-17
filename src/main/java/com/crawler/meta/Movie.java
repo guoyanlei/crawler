@@ -27,6 +27,10 @@ public class Movie {
     private String baiduLink;
     private String baiduLinkPwd;
     private Integer tid;
+    private Integer priseCount;
+    private Integer hotCount;
+    private Long createTime;
+    private Long updateTime;
 
 
     public Long getId() {
@@ -165,25 +169,62 @@ public class Movie {
         this.tid = tid;
     }
 
+    public Integer getPriseCount() {
+        return priseCount;
+    }
+
+    public void setPriseCount(Integer priseCount) {
+        this.priseCount = priseCount;
+    }
+
+    public Integer getHotCount() {
+        return hotCount;
+    }
+
+    public void setHotCount(Integer hotCount) {
+        this.hotCount = hotCount;
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
-                "  title='" + title + '\'' +
-                ",\n poster='" + poster + '\'' +
-                ",\n name='" + name + '\'' +
-                ",\n transName='" + transName + '\'' +
-                ",\n year=" + year +
-                ",\n location='" + location + '\'' +
-                ",\n type='" + type + '\'' +
-                ",\n language='" + language + '\'' +
-                ",\n releaseTime='" + releaseTime + '\'' +
-                ",\n lengthMins=" + lengthMins +
-                ",\n summary='" + summary + '\'' +
-                ",\n screenshot=" + screenshot +
-                ",\n ed2kDownLink='" + ed2kDownLink + '\'' +
-                ",\n baiduLink='" + baiduLink + '\'' +
-                ",\n baiduLinkPwd='" + baiduLinkPwd + '\'' +
-                ",\n tid='" + tid + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", poster='" + poster + '\'' +
+                ", name='" + name + '\'' +
+                ", transName='" + transName + '\'' +
+                ", year=" + year +
+                ", location='" + location + '\'' +
+                ", type='" + type + '\'' +
+                ", language='" + language + '\'' +
+                ", releaseTime='" + releaseTime + '\'' +
+                ", lengthMins=" + lengthMins +
+                ", summary='" + summary + '\'' +
+                ", screenshot=" + screenshot +
+                ", ed2kDownLink=" + ed2kDownLink +
+                ", baiduLink='" + baiduLink + '\'' +
+                ", baiduLinkPwd='" + baiduLinkPwd + '\'' +
+                ", tid=" + tid +
+                ", priseCount=" + priseCount +
+                ", hotCount=" + hotCount +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

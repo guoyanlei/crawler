@@ -16,7 +16,7 @@ public class MovieDao {
 		conn = jdbc.getConn();
 		try {
 			pst = conn.prepareStatement("insert into `movie` value(" +
-					"NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					"NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 			pst.setString(1,movie.getTitle());
 			pst.setString(2,movie.getPoster());
@@ -34,6 +34,10 @@ public class MovieDao {
 			pst.setString(14,movie.getBaiduLink());
 			pst.setString(15,movie.getBaiduLinkPwd());
 			pst.setLong(16,movie.getTid());
+			pst.setInt(17,0);
+			pst.setInt(18,0);
+			pst.setLong(19,System.currentTimeMillis());
+			pst.setLong(20,System.currentTimeMillis());
 
 			int i = pst.executeUpdate();
 			return i;
